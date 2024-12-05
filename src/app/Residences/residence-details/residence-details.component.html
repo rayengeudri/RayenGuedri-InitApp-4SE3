@@ -1,0 +1,7 @@
+<div>
+    <h1>Details of Residence {{ residenceId }}</h1>
+    <button (click)="nextResidence()">Next</button>
+    <button routerLink="/add-residence">Add Residence</button>
+    <button [routerLink]="'/add-residence/' + residenceId">Update Residence</button>
+  </div>
+  

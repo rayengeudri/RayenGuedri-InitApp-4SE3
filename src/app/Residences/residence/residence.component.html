@@ -1,0 +1,54 @@
+<h1 class="text-center my-4">List of Residences</h1>
+
+<!-- Input pour la recherche -->
+<div class="mb-4">
+  <input type="text" class="form-control" [(ngModel)]="searchText">
+</div>
+<!-- Message de confirmation du like -->
+<div *ngIf="likeMessage" class="alert alert-success">
+  {{ likeMessage }}
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <!-- Boucle sur les résidences filtrées -->
+    <div class="col-md-4 mb-4" *ngFor="let residence of filteredResidences()">
+      <div class="card h-100">
+        <!-- Image -->
+        <img [src]="residence.image" class="card-img-top img-fluid" alt="{{ residence.name }} image"
+             style="height: 200px; object-fit: cover;">
+        
+        <div class="card-body">
+          <!-- Nom de la résidence -->
+          <h5 class="card-title">{{ residence.name }}</h5>
+
+          <!-- Statut -->
+          <p class="card-text"><small class="text-muted">Status: {{ residence.status }}</small></p>
+
+          <!-- Statut avec NgSwitch -->
+          <div [ngSwitch]="residence.status">
+            <p *ngSwitchCase="'Disponible'" style="color: green;">Disponible</p>
+            <p *ngSwitchCase="'Vendu'" style="color: red;">Vendu</p>
+            <p *ngSwitchCase="'En Construction'" style="color: orange;">En Construction</p>
+          </div>
+
+          <!-- Bouton pour afficher l'adresse -->
+          <div>
+            <button (click)="showLocation(residence)" class="btn btn-primary">Show Location</button>
+            <span *ngIf="selectedResidence === residence">{{ residence.address }}</span>
+          </div>
+          <div *ngFor="let residence of listResidences">
+            <h3>{{ residence.name }}</h3>
+            <p>{{ residence.address }}</p>
+            <button [routerLink]="['/apartments', residence.id]">View Apartments</button>
+          </div>
+          
+
+          <!-- Bouton pour liker -->
+          <button class="btn btn-danger mt-2" (click)="addFavoris(residence)">Like</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
